@@ -13,6 +13,12 @@ services:
     ports:
       - "3306:3306"
     command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_0900_ai_ci
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u$$MYSQL_USER -p$$MYSQL_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 20s    
     volumes:
       - mysql_data:/var/lib/mysql
 
@@ -22,7 +28,8 @@ services:
       dockerfile: Dockerfile
     container_name: library-api
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     ports:
       - "8000:8000"
