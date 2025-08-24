@@ -16,7 +16,7 @@ FastAPI / MySQL を使用し、Docker Compose による環境構築をサポー�
   
   ```bash
   # リポジトリをクローン
-  git clone https://github.com/username/library-api.git
+  git clone https://github.com/d1300835/library-api.git
   cd library-api
   # ビルド & 起動
   docker compose up --build
@@ -105,14 +105,6 @@ curl "http://localhost:8000/books?offset=0&limit=10"
 ]
 ```
 
-レスポンスヘッダー例:
-
-```json
-X-Total-Count: 3
-X-Offset: 0
-X-Limit: 10
-```
-
 ### 4. 書籍詳細
 
 ```bash
@@ -131,8 +123,6 @@ curl http://localhost:8000/books/a1f2d9c8-7e6b-4d55-9a21-4f2a6b0d8e3a
   "updated_at": "2025-08-24T10:31:00Z"
 }
 ```
-
----
 
 ### 5. 書籍削除
 
