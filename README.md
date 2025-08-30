@@ -164,17 +164,35 @@ HTTP/1.1 204 No Content
 
 ### 設計（Separation of Concerns）
 
+一般的な４層レイヤードアーキテクチャを採用
+
+　→関心ごとを分離し、可読性・保守性を向上させる
+
+１.Presentation層
+
+- `app/routers/*.py`: エンドポイントごとのルーティング
+
+２.Application/Service層
+
+- `app/services/*.py`: ビジネスロジック
+
+３.Data/Domain層
+
 - `app/models.py`: DB モデル定義 (SQLAlchemy)
 - `app/schemas.py`: 入出力スキーマ定義 (Pydantic)
-- `app/routers/*.py`: エンドポイントごとのルーティング
+
+４.Infrastructure層
+
 - `app/database.py`: DB セッション管理
-- `app/main.py`: FastAPI アプリ本体
 
-→ 関心ごとを分離し、可読性・保守性を向上。
+その他：
 
----
+- `app/main.py`: FastAPI アプリ本体（アプリケエーションエントリーポイント）
+- `app/util/*.py`: 各クラスから呼ばれる共通処理
 
-## ＜ディレクトリ構成＞
+
+
+### ディレクトリ構成
 
 ```
 .
@@ -187,19 +205,22 @@ library-api/
 │   ├── schemas.py
 │   ├── utils/
 │   │   └── errors.py
-│   └── routers/
-│       ├── authors.py
-│       └── books.py
+│   ├── routers/
+│   │    ├── authors.py
+│   │    └── books.py
+│   └── services/
+│        ├── authors_service.py
+│        └── books_service.py
 ├── Dockerfile
 ├── docker-compose.yml
 ├── requirements.txt
-├── .env
+├── .env　（※チーム開発ではGitに載せない）
 └── README.md
 ```
 
 ---
 
-#### ＜未実装機能・今後の検討事項＞
+## ＜未実装機能・今後の検討事項＞
 
 ※ 今回のコーディング課題のスコープ外として未対応ですが、実務を想定すると以下が必要になります。
 

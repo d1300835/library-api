@@ -21,7 +21,5 @@ class Book(TimestampMixin, Base):
     author: Mapped['Author'] = relationship('Author', back_populates='books')
 
     __table_args__ = (
-        UniqueConstraint("author_id", "title", name="uq_books_author_title"),
-        Index("idx_books_title", "title"),
-        Index("idx_books_author_id", "author_id"),
+        UniqueConstraint("author_id", "title", name="uq_books_author_title") ,
     )
